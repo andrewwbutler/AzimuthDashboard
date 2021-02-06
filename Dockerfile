@@ -10,9 +10,9 @@ RUN apt-get install -y \
 RUN echo "options(repos = 'https://cloud.r-project.org')" > $(R --no-echo --no-save -e "cat(Sys.getenv('R_HOME'))")/etc/Rprofile.site
 ENV RETICULATE_MINICONDA_ENABLED=FALSE
 
+RUN R --no-echo -e "install.packages(c('cowplot', 'dplyr', 'ggplot2', 'googlesheets4', 'shiny', 'shinydashboard', 'withr'))"
+
 COPY . /root/AzimuthDashboard
-RUN R --no-echo -e "install.packages('remotes')"
-RUN R --no-echo -e "remotes::install_deps('/root/AzimuthDashboard')"
 RUN R --no-echo -e "install.packages('/root/AzimuthDashboard', repos = NULL, type = 'source')"
 
 EXPOSE 3838
