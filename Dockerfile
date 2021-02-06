@@ -14,6 +14,7 @@ RUN R --no-echo -e "install.packages(c('cowplot', 'dplyr', 'ggplot2', 'googleshe
 
 COPY . /root/AzimuthDashboard
 RUN R --no-echo -e "install.packages('/root/AzimuthDashboard', repos = NULL, type = 'source')"
+COPY Rprofile.site /usr/local/lib/R/etc/Rprofile.site
 
 EXPOSE 3838
 
