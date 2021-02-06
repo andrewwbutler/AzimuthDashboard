@@ -17,4 +17,4 @@ RUN R --no-echo -e "install.packages('/root/AzimuthDashboard', repos = NULL, typ
 
 EXPOSE 3838
 
-CMD ["R", "-e", "AzimuthDashboard::AzimuthDashboardApp(config='/tokens')"]
+CMD ["R", "-e", "AzimuthDashboard::AzimuthDashboardApp(config='/config')"]
