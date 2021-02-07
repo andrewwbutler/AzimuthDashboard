@@ -6,7 +6,7 @@
 #' @importFrom dplyr filter summarize group_by %>% n
 #' @importFrom shiny observeEvent reactiveValues renderPlot
 #' @importFrom shinydashboard renderMenu renderValueBox sidebarMenu valueBox
-#' @importFrom googlesheets4 gs4_auth gs4_get range_speedread
+#' @importFrom googlesheets4 gs4_auth gs4_get range_read
 #' @importFrom cowplot theme_cowplot
 #' @importFrom ggplot2 ggplot geom_point geom_line geom_bar geom_text xlab ylab
 #' labs theme ylim aes element_text
@@ -26,11 +26,14 @@ AzimuthDashboardServer <- function(input, output, session) {
         email = getOption(x = "AzimuthDashboard.app.googletokenemail"),
         cache = getOption(x = "AzimuthDashboard.app.googletoken"))
       googlesheet <- gs4_get(ss = url)
-      logs <- range_speedread(url, col_names = FALSE)
+      logs <- range_read(googlesheet, col_names = FALSE)
+      colnames(x = logs) <- c("type", "id", "reference", "reference_version", "demo", "cells_uploaded", "cells_mapped", "mapping_time", "date")
+      logs$reference <- as.character(x = logs$reference)
+      logs$date <- as.Date(logs$date)
       # data cleaning
-      logs <- logs[logs$X1 == "SUMMARY", ]
+      logs <- logs[logs$type == "SUMMARY", ]
       logs[, 1] <- NULL
-      colnames(x = logs) <- c("id", "reference", "reference_version", "demo", "cells_uploaded", "cells_mapped", "mapping_time", "date")
+
       react.env$log.data <- logs
     },
     ignoreNULL = FALSE

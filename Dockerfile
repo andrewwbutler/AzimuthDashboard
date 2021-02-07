@@ -4,7 +4,8 @@ FROM rocker/r-ver:4.0.3
 RUN apt-get update                                                                                  
 RUN apt-get install -y \  
     libcurl4-openssl-dev \ 
-    libssl-dev
+    libssl-dev \
+    libxt6
 
 # Set global R options
 RUN echo "options(repos = 'https://cloud.r-project.org')" > $(R --no-echo --no-save -e "cat(Sys.getenv('R_HOME'))")/etc/Rprofile.site
@@ -18,4 +19,4 @@ COPY Rprofile.site /usr/local/lib/R/etc/Rprofile.site
 
 EXPOSE 3838
 
-CMD ["R", "-e", "AzimuthDashboard::AzimuthDashboardApp(config='/config')"]
+CMD ["R", "-e", "AzimuthDashboard::AzimuthDashboardApp(config='/config/config.json')"]
