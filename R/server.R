@@ -27,7 +27,7 @@ AzimuthDashboardServer <- function(input, output, session) {
         cache = getOption(x = "AzimuthDashboard.app.googletoken"))
       googlesheet <- gs4_get(ss = url)
       logs <- range_read(googlesheet, col_names = FALSE)
-      colnames(x = logs) <- c("type", "id", "reference", "reference_version", "demo", "cells_uploaded", "cells_mapped", "mapping_time", "date")
+      colnames(x = logs) <- c("type", "id", "reference", "reference_version", "demo", "cells_uploaded", "cells_mapped", "mapping_time", "date", "nanchor", "cluster_preservation_score")
       logs$reference <- as.character(x = logs$reference)
       logs$date <- as.Date(logs$date)
       # data cleaning
